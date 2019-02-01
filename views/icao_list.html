@@ -1,0 +1,131 @@
+<% include header %>
+<script language="javascript">
+  function RegisterCode()
+  {
+      form.submit(); 
+  }
+
+  $(document).ready(function(){
+      $.ajax({
+            type: "GET",
+            cache: false,
+            async: false,
+            url: '/airport/icao/code_list',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function(response) {
+                info = [];
+                $("#codeTable").find("tr:gt(0)").remove();
+                response.forEach(function(cur, index) {
+                    info.push(cur);
+                });
+                console.log(info);
+
+                $('#codeTable').dataTable({
+                    "bAuthWith" : true,
+                    "order": [[0, "asc"]],
+                    "aaData": info,
+                    "aoColumns":[
+                        { "mData": "_id", "title":"_id", "bSortable": false},
+				        { "mData": "icao_cd", "title": "ICAO CD",   "bSortable": true},
+				        { "mData": "icao_nm", "title": "ICAO NAME", "bSortable": true},
+                        { "mData": "lat", "title": "Latitude", "bSortable": true},
+                        { "mData": "lon", "title": "Longitude", "bSortable": true}
+                    ],
+                    "columnDefs": [
+                        {
+                            "targets": [0],
+                            "visible": false,
+                            "searchable": true
+                        }
+                    ]
+                })
+
+            },
+            error: function(request, status, error) {
+                alert("code: " + request.status + "\n" + "message: " + request.responseText+"\n"+"error:"+error );
+            }
+      }).done(function (msg){
+          console.log(msg);
+      });
+  });
+</script>
+
+      <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+          <!-- Breadcrumbs-->
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="#">Code Management</a>
+            </li>
+            <li class="breadcrumb-item active">ICAO Code List</li>
+          </ol>
+
+          <!-- Icon Cards-->
+          <div class="row">
+            <div class="col-xl-12 col-sm-12 mb-3">
+              <div class="card text-white bg-primary o-hidden h-100">
+                <div class="card-body">
+                  <div class="card-body-icon">
+                    <i class="fas fa-fw fa-comments"></i>
+                  </div>
+                  <div class="mr-5">ICAO Code 올리기
+                        <span class="float-right">
+                            <i class="fas fa-angle-right"></i>
+                        </span>
+                  </div>
+                </div>
+                <form name=form method='post' action='/airport/icao/reg'>
+                <div class="card-body">
+                    <span class="float-left">
+                        <textarea name='icao_cd_list' id='icao_cd_list' rows=10 cols=80>
+
+                        </textarea>
+                    </span>
+                    <a class="float-right card-footer text-white clearfix small z-1" href="javascript:RegisterCode();">                  
+                        [Save]
+                    </a>
+                 </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+
+
+          <!-- DataTables Example -->
+          <div class="card mb-3">
+            <div class="card-header">
+              <i class="fas fa-table"></i>
+              Data Table (ICAO Code)</div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="codeTable" width="100%" cellspacing="0">
+                  <!-- thead>
+                    <tr>
+                      <th>구분</th>
+                      <th>지역</th>
+                      <th>구역명</th>
+                      <th>구역코드</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                      <th>구분</th>
+                      <th>지역</th>
+                      <th>구역명</th>
+                      <th>구역코드</th>
+                    </tr>
+                  </tfoot  -->
+                </table>
+              </div>
+            </div>
+            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+<% include footer %>

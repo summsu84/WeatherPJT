@@ -1,0 +1,92 @@
+[
+  {
+    "icao_cd": "RKSI",
+    "icao_nm": "인천공항",
+    "lat" : 37.4692,
+    "lon": 126.451
+  },
+  {
+    "icao_cd": "RKSS",
+    "icao_nm": "김포공항",
+    "lat" : 37.5583,
+    "lon": 126.791  
+  },
+  {
+    "icao_cd": "RKPC",
+    "icao_nm": "제주공항",
+    "lat" : 33.5114,
+    "lon": 126.493  
+  },  
+  {
+    "icao_cd": "RKPK",
+    "icao_nm": "김해공항",
+    "lat" : 35.1403,
+    "lon": 129.063  
+  },  
+  {
+    "icao_cd": "RKNY",
+    "icao_nm": "양양공항",
+    "lat" : 38.0588,
+    "lon": 128.663  
+  },   
+  {
+    "icao_cd": "RKNW",
+    "icao_nm": "원주공항",
+    "lat" : 37.4592,
+    "lon": 127.977  
+  },  
+  {
+    "icao_cd": "RKTU",
+    "icao_nm": "청주공항",
+    "lat" : 36.7167,
+    "lon": 127.499  
+  }, 
+  {
+    "icao_cd": "RKTN",
+    "icao_nm": "대구공항",
+    "lat" : 35.8942,
+    "lon": 128.659  
+  },   
+  {
+    "icao_cd": "RKTH",
+    "icao_nm": "포항공항",
+    "lat" : 35.9847,
+    "lon": 129.434  
+  },  
+  {
+    "icao_cd": "RKJJ",
+    "icao_nm": "광주공항",
+    "lat" : 35.1264,
+    "lon": 126.809  
+  },  
+  {
+    "icao_cd": "RKJB",
+    "icao_nm": "무안공항",
+    "lat" : 34.9914,
+    "lon": 126.383  
+  }, 
+  {
+    "icao_cd": "RKJY",
+    "icao_nm": "여수공항",
+    "lat" : 34.8422,
+    "lon": 127.617  
+  },  
+  {
+    "icao_cd": "RKPU",
+    "icao_nm": "울산공항",
+    "lat" : 35.5936,
+    "lon": 129.352  
+  },  
+  {
+    "icao_cd": "RKPS",
+    "icao_nm": "사천공항",
+    "lat" : 35.0886,
+    "lon": 128.07  
+  },   
+  {
+    "icao_cd": "RKJK",
+    "icao_nm": "군산공항",
+    "lat" : 35.9039,
+    "lon": 126.616  
+  }          
+]
