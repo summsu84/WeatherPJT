@@ -58,5 +58,10 @@
     - github.com/minsoub/WeatherPJT에서 소스를 내려 받는다
     $ git clone https://github.com/minsoub/WeatherPJT.git 
     - 해당 디렉토리에서 npm install을 실행해서 node_module을 생성한다.
+    
+# Test
+    브라우저에서 
+      - http://3.93.164.199:9000/
+      - http://3.93.164.199:9000/metar/search?icao_cd=RKSI
   
 
