@@ -3,6 +3,7 @@ var parseString = require('xml2js').parseString
 var dateFormat = require('dateformat');
 var mongodb = require('mongodb');
 var XLSX = require('xlsx');
+var parseMETAR = require('metar');
 
 var xmlToJson = function(url, callback) {
     var req = http.get(url, function(res) {
@@ -165,8 +166,11 @@ var metar_process = function(req, res) {
         dd = gd.response.body[0].items[0].item[0].metarMsg[0];
         console.log(dd);
 
-        // METAR 분석
-        var metar = metar_analysis_process(code, name, dd);
+        // METAR 분석 => https://www.npmjs.com/package/metar
+        var metar = parseMETAR(dd);
+        var reg_dt=dateFormat(new Date(), "yyyymmddhh");
+        metar['reg_dt'] = reg_dt;
+        //var metar = metar_analysis_process(code, name, dd);
         console.log(metar);
 
         // Mongodb에 데이터 등록
@@ -181,7 +185,11 @@ var metar_process = function(req, res) {
                 var db = database.db('weather_db');
 
                 // 중복 체크
-                var query = {'icao_cd': metar.icao_cd, 'crt_dt': metar.crt_dt};
+                var query = {
+                        'station': metar.station, 
+                        'reg_dt': metar.reg_dt
+                };
+
                 db.collection('metar').find(query).count(function(err, count){
                     console.log("cnt : " + count);
                     if (count == 0)
@@ -198,7 +206,7 @@ var metar_process = function(req, res) {
                 console.log(err);
             }else {
                 var db = database.db('weather_db');
-                var where = {'icao_cd': metar.icao_cd, 'crt_dt': metar.crt_dt};
+                var where = {'station': metar.station, 'reg_dt': metar.reg_dt};
                 var cursor = db.collection('metar').find(where);
                 cursor.forEach(function(doc){
                     result_data = doc;
