@@ -9,11 +9,15 @@ app.use(bodyParser());
 var main = require('./router/main')(app);
 app.use('/', main);
 
-// 항공기상
+// 항공기상 - METAR
 var metar = require('./router/metar')(app);
 app.use('/metar', metar);
 
-// 
+// 항공기상 - TAF
+var taf = require('./router/taf')(app);
+app.use('/taf', taf);
+
+// 공항정보
 var airport = require('./router/airport')(app);
 app.use('/airport', airport);
 
