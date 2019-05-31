@@ -1,0 +1,9 @@
+/*
+service-key-config.json으로 이름 변경 및 아래 키 입력 필요
+*/
+
+{
+  "WEEKLY_WEATHER_SERVICE_KEY": "",
+  "WEATHER_LIFE_SERVICE_KEY" : "",
+  "EARTHQUAKE_SERVICE_KEY" : ""
+}
