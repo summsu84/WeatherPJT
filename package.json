@@ -14,9 +14,11 @@
     "enum": "^2.5.0",
     "express": "~4.16.4",
     "express-fileupload": "^1.1.1-alpha.1",
+    "lodash": "^4.17.11",
     "metar": "^1.0.0",
     "metar-taf": "0.0.2",
     "mongodb": "^3.1.13",
+    "request": "^2.88.0",
     "xlsx": "^0.14.1",
     "xml2js": "^0.4.19"
   },
