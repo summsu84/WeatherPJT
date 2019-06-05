@@ -1,7 +1,4 @@
-/*
-service-key-config.json으로 이름 변경 및 아래 키 입력 필요
-*/
-
+#아래에 기상청 키를 작성하고, service-key-config.json으로 이름 변경 후 해당 라인 삭제 해주세요
 {
   "WEEKLY_WEATHER_SERVICE_KEY": "",
   "WEATHER_LIFE_SERVICE_KEY" : "",
