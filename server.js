@@ -33,6 +33,10 @@ app.use('/weatherlife', weatherlife);
 const earthquake = require('./router/earthquake/earthquake-route')(app);
 app.use('/earthquake', earthquake);
 
+// 낙뢰 정보 라우터
+const thunderstroke = require('./router/thunderstroke/thunderstroke-route')(app);
+app.use('/thunderstroke', thunderstroke);
+
 app.set('views', __dirname+'/views');
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);

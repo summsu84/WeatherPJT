@@ -92,6 +92,12 @@ let getRequestUrl = (params, baseUrl, serviceUrl, serviceKey) =>
 }
 
 
+let getWithoutTime = () => {
+    let date = new Date();
+    date.setHours(0, 0, 0, 0);
+    return date;
+
+}
 
 let parsingResultOfForecastSpace = (body) =>
 {
@@ -176,6 +182,81 @@ let parsingResultOfForecastSpace = (body) =>
     // 모레 필요한 데이터
     // 1. 오전 최저, 오후 최고,
     // 2. 오전 SKY, 오후 SKY
+
+    // 우선 6시 15시 기준 데이터를 가져온다.
+    // 현재 시간
+    const date = new Date();
+    const dateWithoutTime = getWithoutTime(date);
+    let strDay = (date.getMonth() + 1) < 10 ? "0".concat((date.getMonth() + 1).toString()) : (date.getMonth() + 1).toString();
+    let numberDate = Number((date.getFullYear()).toString() + strDay + (date.getDate().toString()));
+    let numberHour = date.getHours();
+    let currentT3h = null;
+    let currentSky = null;
+    let retVal = [];
+    let prevfcstDate = null;
+    let object = {};
+    let idx = -1;
+    tmpItems.forEach((v, i) => {
+        // 오늘 시간
+        if(v.fcstDate == numberDate)
+        {
+            //fcstTime이 숫자인지 스트링인지 판단한다.
+            let fcstTime = null;
+            if(typeof v.fcstTime === "number")
+            {
+                v.fcstTime = v.fcstTime.toString();
+                fcstTime = Number((v.fcstTime.toString()).substring(0, 2));
+            }else
+            {
+                fcstTime = Number(v.fcstTime.substring(0, 2));
+            }
+
+            if(fcstTime < numberHour)
+            {
+                if(v.category === "T3H"){
+                    currentT3h = v;
+                }else if(v.category === "SKY")
+                    currentSky = v;
+            }
+        }else
+        {
+            // 오늘이 아닌 경우
+            if(prevfcstDate != v.fcstDate)
+            {
+                // 날이 달라지는 경우
+                retVal.push({
+                    item: []
+                });
+                idx++;
+            }
+
+            if(v.fcstTime === "0600")
+            {
+                retVal[idx].item.push(v);
+            }else if(v.fcstTime === "1500" || v.fcstTime === 1500)
+            {
+                v.fcstTime = v.fcstTime.toString();
+                retVal[idx].item.push(v);
+            }
+        }
+        prevfcstDate = v.fcstDate;
+    });
+    let itemtmp =
+        {
+            item : []
+        };
+    itemtmp.item.push(currentSky);
+    itemtmp.item.push(currentT3h);
+
+
+    //retVal.unshift(currentSky);
+    //retVal.unshift(currentT3h);
+    retVal.unshift(itemtmp);
+
+    /*retVal.append(currentT3h);
+    retVal.append(currentSky);*/
+
+
     /*const retItems = [];
     tmpItems.forEach((v, i) => {
         // 현재 날씨 정보를 파싱한다.
@@ -217,7 +298,7 @@ let parsingResultOfForecastSpace = (body) =>
     });*/
 
     console.log("tmpItem");
-    return tmpItems;
+    return retVal;
 }
 
 

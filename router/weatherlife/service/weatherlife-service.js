@@ -41,7 +41,21 @@ const WeatherLifeServiceLogic = {
                 console.error(body);
             } else {
                 //성공인 경우..
-                onSuccess(JSON.parse(body));
+/*                const datas = JSON.parse(body);
+                // header 정보 파싱
+                const successYN = datas.Response.header.successYN;
+                let retVal;
+                if(successYN === "N") {
+                    retVal = datas.Response.header;
+                    onError(retVal);
+                }else
+                {
+                    retVal = datas.Response.body.indexModel;
+                    onSuccess(retVal);
+                }*/
+
+                parsingResultOfWeatherLife(Const.FSN_ITEM, body, onSuccess, onError);
+
             }
 
         });
@@ -59,14 +73,15 @@ const WeatherLifeServiceLogic = {
                 console.error(body);
             } else {
                 //성공인 경우..
-                onSuccess(JSON.parse(body));
+                //onSuccess(JSON.parse(body));
+                parsingResultOfWeatherLife(Const.SENSORYTEM_ITEM, body, onSuccess, onError);
             }
         });
 
     },
     // 열지수 조회 서비스
     getHeatLife : (params, onSuccess, onError) => {
-        const options = getRequestUrl(params, Const.WEATHERLIFE_BASE_URL, Const.SENSORYTEM_URL, ServiceKeyConfig.WEATHER_LIFE_SERVICE_KEY);
+        const options = getRequestUrl(params, Const.WEATHERLIFE_BASE_URL, Const.HEAT_URL, ServiceKeyConfig.WEATHER_LIFE_SERVICE_KEY);
         request(options, (error, response, body) => {
             if (error) {
                 console.error(error);
@@ -76,13 +91,14 @@ const WeatherLifeServiceLogic = {
                 console.error(body);
             } else {
                 //성공인 경우..
-                onSuccess(JSON.parse(body));
+                //onSuccess(JSON.parse(body));
+                parsingResultOfWeatherLife(Const.HEAT_ITEM, body, onSuccess, onError);
             }
         });
     },
     // 불쾌 지수 조회 서비스
     getDsplsLife : (params, onSuccess, onError) => {
-        const options = getRequestUrl(params, Const.WEATHERLIFE_BASE_URL, Const.SENSORYTEM_URL, ServiceKeyConfig.WEATHER_LIFE_SERVICE_KEY);
+        const options = getRequestUrl(params, Const.WEATHERLIFE_BASE_URL, Const.DSPIS_URL, ServiceKeyConfig.WEATHER_LIFE_SERVICE_KEY);
         request(options, (error, response, body) => {
             if (error) {
                 console.error(error);
@@ -92,13 +108,13 @@ const WeatherLifeServiceLogic = {
                 console.error(body);
             } else {
                 //성공인 경우..
-                onSuccess(JSON.parse(body));
+                parsingResultOfWeatherLife(Const.DSPIS_ITEM, body, onSuccess, onError);
             }
         });
     },
 // 동파가능지수 조회 서비스
     getWinterLife : (params, onSuccess, onError) => {
-        const options = getRequestUrl(params, Const.WEATHERLIFE_BASE_URL, Const.SENSORYTEM_URL, ServiceKeyConfig.WEATHER_LIFE_SERVICE_KEY);
+        const options = getRequestUrl(params, Const.WEATHERLIFE_BASE_URL, Const.WINTER_URL, ServiceKeyConfig.WEATHER_LIFE_SERVICE_KEY);
         request(options, (error, response, body) => {
             if (error) {
                 console.error(error);
@@ -108,14 +124,14 @@ const WeatherLifeServiceLogic = {
                 console.error(body);
             } else {
                 //성공인 경우..
-                onSuccess(JSON.parse(body));
+                parsingResultOfWeatherLife(Const.WINTER_ITEM, body, onSuccess, onError);
             }
         });
 
     },
     // 자외선 지수
     getUltrvLife : (params, onSuccess, onError) => {
-        const options = getRequestUrl(params, Const.WEATHERLIFE_BASE_URL, Const.SENSORYTEM_URL, ServiceKeyConfig.WEATHER_LIFE_SERVICE_KEY);
+        const options = getRequestUrl(params, Const.WEATHERLIFE_BASE_URL, Const.ULTRV_URL, ServiceKeyConfig.WEATHER_LIFE_SERVICE_KEY);
         request(options, (error, response, body) => {
             if (error) {
                 console.error(error);
@@ -125,13 +141,13 @@ const WeatherLifeServiceLogic = {
                 console.error(body);
             } else {
                 //성공인 경우..
-                onSuccess(JSON.parse(body));
+                parsingResultOfWeatherLife(Const.ULTRV_ITEM, body, onSuccess, onError);
             }
         });
     },
 // 대기 확산 지수 airpollutionlife
     getAirPollutionLife : (params, onSuccess, onError) => {
-        const options = getRequestUrl(params, Const.WEATHERLIFE_BASE_URL, Const.SENSORYTEM_URL, ServiceKeyConfig.WEATHER_LIFE_SERVICE_KEY);
+        const options = getRequestUrl(params, Const.WEATHERLIFE_BASE_URL, Const.AIRPOLLUTION_URL, ServiceKeyConfig.WEATHER_LIFE_SERVICE_KEY);
         request(options, (error, response, body) => {
             if (error) {
                 console.error(error);
@@ -141,7 +157,7 @@ const WeatherLifeServiceLogic = {
                 console.error(body);
             } else {
                 //성공인 경우..
-                onSuccess(JSON.parse(body));
+                parsingResultOfWeatherLife(Const.AIRPOLLUTION_ITEM, body, onSuccess, onError);
             }
         });
     },
@@ -157,7 +173,7 @@ const WeatherLifeServiceLogic = {
                 console.error(body);
             } else {
                 //성공인 경우..
-                onSuccess(JSON.parse(body));
+                parsingResultOfWeatherLife(body, onSuccess, onError);
             }
         });
     }
@@ -175,6 +191,42 @@ let getRequestUrl = (params, baseUrl, serviceUrl, serviceKey) =>
 
     return options;
 }
+
+let parsingResultOfWeatherLife = (type, body, onSuccess, onError) =>
+{
+    const datas = JSON.parse(body);
+
+    const newGenVal =
+        {
+            "header" : null,
+            "items" : null,
+            "itemType" : type
+        };
+
+    // header 정보 파싱
+    if(datas.hasOwnProperty("response"))
+    {
+        if(datas.response.header.resultCode === "12")
+            onSuccess(datas.response.header,Const.responsecodeError);
+    }else {
+        const successYN = datas.Response.header.successYN;
+        let retVal;
+        if (successYN === "N") {
+            retVal = datas.Response.header;
+            newGenVal.header = retVal;
+            onSuccess(newGenVal, Const.responsecodeError);
+        } else {
+            retVal = datas.Response.body.indexModel;
+            newGenVal.header = datas.Response.header;
+            const typeObject = {};
+            typeObject[type] = retVal;
+            newGenVal.items = typeObject;
+            onSuccess(newGenVal);
+        }
+    }
+}
+
+
 
 module["exports"] = WeatherLifeServiceLogic;
 

@@ -7,10 +7,15 @@ var RequestHandlerBase = function(){
 
 RequestHandlerBase.prototype.errorResponse = function(
         response,
-        httpCode){
+        httpCode,
+        data){
 
     response.status(httpCode);
-    response.send("");
+    //response.send("");
+    response.json({
+        code : Const.responsecodeError,
+        data : data
+    });
     
 }
 
@@ -22,7 +27,8 @@ RequestHandlerBase.prototype.successResponse = function(response, code, data){
 
         //success 코드가 아닌 경우..
          response.json({
-            code : code
+            code : code,
+             data: data
         });
         
     } else {

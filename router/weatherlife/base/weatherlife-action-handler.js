@@ -25,10 +25,10 @@ WeatherifeActionHandler.prototype.processAction = function(action, param, req, r
     if(action === 'FsnLife')
     {
 
-        weatherlifeServiceLogic.getFsnLife(param, (result) => {
+        weatherlifeServiceLogic.getFsnLife(param, (result, code) => {
             //성공시
             //let messageObj = generateContent(action, result);
-            self.successResponse(selfRes,Const.responsecodeSucceed, result);
+            self.successResponse(selfRes, (code == null) ? Const.responsecodeSucceed : code, result);
         },(err,code, msg)=>{
             // 실패 시
             if(err){
@@ -53,9 +53,9 @@ WeatherifeActionHandler.prototype.processAction = function(action, param, req, r
      ***********************************************************/
     else if(action === 'SensorytemLife')
     {
-        weatherlifeServiceLogic.getSensoryTemLife(param, (result) => {
+        weatherlifeServiceLogic.getSensoryTemLife(param, (result, code) => {
             //성공시
-            self.successResponse(selfRes,Const.responsecodeSucceed, result);
+            self.successResponse(selfRes, (code == null) ? Const.responsecodeSucceed : code, result);
         },(err,code, msg)=>{
             // 실패 시
             if(err){
@@ -78,9 +78,9 @@ WeatherifeActionHandler.prototype.processAction = function(action, param, req, r
      ***********************************************************/
     else if(action === 'HeatLife')
     {
-        weatherlifeServiceLogic.getHeatLife(param, (result) => {
+        weatherlifeServiceLogic.getHeatLife(param, (result, code) => {
             //성공시
-            self.successResponse(selfRes,Const.responsecodeSucceed, result);
+            self.successResponse(selfRes, (code == null) ? Const.responsecodeSucceed : code, result);
         },(err,code, msg)=>{
             // 실패 시
             if(err){
@@ -103,9 +103,9 @@ WeatherifeActionHandler.prototype.processAction = function(action, param, req, r
      ***********************************************************/
     else if(action === 'DspIsLife')
     {
-        weatherlifeServiceLogic.getDsplsLife(param, (result) => {
+        weatherlifeServiceLogic.getDsplsLife(param, (result, code) => {
             //성공시
-            self.successResponse(selfRes,Const.responsecodeSucceed, result);
+            self.successResponse(selfRes, (code == null) ? Const.responsecodeSucceed : code, result);
         },(err,code, msg)=>{
             // 실패 시
             if(err){
@@ -128,9 +128,9 @@ WeatherifeActionHandler.prototype.processAction = function(action, param, req, r
      ***********************************************************/
     else if(action === 'WinterLife')
     {
-        weatherlifeServiceLogic.getWinterLife(param, (result) => {
+        weatherlifeServiceLogic.getWinterLife(param, (result, code) => {
             //성공시
-            self.successResponse(selfRes,Const.responsecodeSucceed, result);
+            self.successResponse(selfRes, (code == null) ? Const.responsecodeSucceed : code, result);
         },(err,code, msg)=>{
             // 실패 시
             if(err){
@@ -153,9 +153,9 @@ WeatherifeActionHandler.prototype.processAction = function(action, param, req, r
      ***********************************************************/
     else if(action === 'UltrvLife')
     {
-        weatherlifeServiceLogic.getUltrvLife(param, (result) => {
+        weatherlifeServiceLogic.getUltrvLife(param, (result, code) => {
             //성공시
-            self.successResponse(selfRes,Const.responsecodeSucceed, result);
+            self.successResponse(selfRes, (code == null) ? Const.responsecodeSucceed : code, result);
         },(err,code, msg)=>{
             // 실패 시
             if(err){
@@ -178,9 +178,9 @@ WeatherifeActionHandler.prototype.processAction = function(action, param, req, r
      ***********************************************************/
     else if(action === 'AirpollutionLife')
     {
-        weatherlifeServiceLogic.getAirPollutionLife(param, (result) => {
+        weatherlifeServiceLogic.getAirPollutionLife(param, (result, code) => {
             //성공시
-            self.successResponse(selfRes,Const.responsecodeSucceed, result);
+            self.successResponse(selfRes, (code == null) ? Const.responsecodeSucceed : code, result);
         },(err,code, msg)=>{
             // 실패 시
             if(err){
