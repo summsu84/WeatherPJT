@@ -240,12 +240,15 @@ let parsingResultOfWeatherLife = (type, body, onSuccess, onError) =>
                     title: key,
                     value: value,
                     description: '',
+                    range: '',
                     useYn: (key === "code" || key === "areaNo" || key === "date") ? 'N' : 'Y'
                 }
 
                 if(tmpObject.useYn == 'Y')
                 {
-                    tmpObject.description = getDescriptionInfo(type, value);
+                    const tmpResult = getDescriptionInfo(type, value);
+                    tmpObject.description = tmpResult.description
+                    tmpObject.range = tmpResult.range;
                     tmpArray.push(tmpObject);
                 }
 
@@ -272,42 +275,58 @@ let getDescriptionInfo =(type, value) =>
  */
 let getFsnDescriptionInfo = (value) =>
 {
-    let retVal = '';
+    let retVal = {
+        description: '',
+        range: ''
+    };
     if(value >= 86)
     {
-        retVal = Const.FSN_VALUE_VERY_HIGH;
+        retVal.description = Const.FSN_VALUE_VERY_HIGH;
+        retVal.range = Const.WEATHERLIFE_RANGE_VERY_HIGH;
+
     }else if(value >= 71 && value < 86)
     {
-        retVal = Const.FSN_VALUE_HIGH;
+        retVal.description = Const.FSN_VALUE_HIGH;
+        retVal.range = Const.WEATHERLIFE_RANGE_HIGH;
     }else if(value >= 55 && value < 71)
     {
-        retVal = Const.FSN_VALUE_NORMAL;
+        retVal.description = Const.FSN_VALUE_NORMAL;
+        retVal.range = Const.WEATHERLIFE_RANGE_NORMAL;
     }else
     {
-        retVal = Const.FSN_VALUE_GOOD;
+        retVal.description = Const.FSN_VALUE_GOOD;
+        retVal.range = Const.WEATHERLIFE_RANGE_LOW;
     }
 
     return retVal;
 }
 
 /**
- *  식중독 지수 설명 정보
+ *  체감온도 지수 설명 정보
  */
 let getSensorytemDescriptionInfo = (value) =>
 {
-    let retVal = '';
+    let retVal = {
+        description: '',
+        range: ''
+    };
     if(value >= 86)
     {
-        retVal = Const.FSN_VALUE_VERY_HIGH;
+        retVal.description = Const.FSN_VALUE_VERY_HIGH;
+        retVal.range = Const.WEATHERLIFE_RANGE_VERY_HIGH;
+
     }else if(value >= 71 && value < 86)
     {
-        retVal = Const.FSN_VALUE_HIGH;
+        retVal.description = Const.FSN_VALUE_HIGH;
+        retVal.range = Const.WEATHERLIFE_RANGE_HIGH;
     }else if(value >= 55 && value < 71)
     {
-        retVal = Const.FSN_VALUE_NORMAL;
+        retVal.description = Const.FSN_VALUE_NORMAL;
+        retVal.range = Const.WEATHERLIFE_RANGE_NORMAL;
     }else
     {
-        retVal = Const.FSN_VALUE_GOOD;
+        retVal.description = Const.FSN_VALUE_GOOD;
+        retVal.range = Const.WEATHERLIFE_RANGE_LOW;
     }
 
     return retVal;
@@ -315,19 +334,32 @@ let getSensorytemDescriptionInfo = (value) =>
 
 let getHeatLifeDescriptionInfo = (value) =>
 {
-    let retVal = '';
-    if(value >= 86)
+    let retVal = {
+        description: '',
+        range: ''
+    };
+    if(value >= 66)
     {
-        retVal = Const.FSN_VALUE_VERY_HIGH;
-    }else if(value >= 71 && value < 86)
+        retVal.description = Const.FSN_VALUE_VERY_HIGH;
+        retVal.range = Const.WEATHERLIFE_RANGE_DANGER;
+
+    }else if(value >= 54 && value < 65)
     {
-        retVal = Const.FSN_VALUE_HIGH;
-    }else if(value >= 55 && value < 71)
+        retVal.description = Const.FSN_VALUE_HIGH;
+        retVal.range = Const.WEATHERLIFE_RANGE_VERY_HIGH;
+    }else if(value >= 41 && value < 54)
     {
-        retVal = Const.FSN_VALUE_NORMAL;
-    }else
+        retVal.description = Const.FSN_VALUE_NORMAL;
+        retVal.range = Const.WEATHERLIFE_RANGE_VERY_HIGH;
+    }else if(value >= 32 && value < 41)
     {
-        retVal = Const.FSN_VALUE_GOOD;
+        retVal.description = Const.FSN_VALUE_NORMAL;
+        retVal.range = Const.WEATHERLIFE_RANGE_NORMAL;
+    }
+    else
+    {
+        retVal.description = Const.FSN_VALUE_GOOD;
+        retVal.range = Const.WEATHERLIFE_RANGE_LOW;
     }
 
     return retVal;
