@@ -267,6 +267,8 @@ let getDescriptionInfo =(type, value) =>
     if(type === Const.FSN_ITEM)
     {
         return getFsnDescriptionInfo(value);
+    }else {
+        return getFsnDescriptionInfo(value);
     }
 }
 
