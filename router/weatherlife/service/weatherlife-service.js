@@ -247,7 +247,7 @@ let parsingResultOfWeatherLife = (type, body, onSuccess, onError) =>
                 if(tmpObject.useYn == 'Y')
                 {
                     const tmpResult = getDescriptionInfo(type, value);
-                    tmpObject.description = tmpResult.description
+                    tmpObject.description = tmpResult.description;
                     tmpObject.range = tmpResult.range;
                     tmpArray.push(tmpObject);
                 }
