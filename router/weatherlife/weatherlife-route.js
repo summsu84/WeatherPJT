@@ -11,7 +11,9 @@ module.exports = function(app)
     // default options
     // 생활기상 URI 구조
     // 1.
-    router.get('/:area/:date', function(req, res){
+    router.get('/all/:areaNo/:date', function(req, res){
+        // 전체 정보를 가져온다.
+        processGetRequest('All', req, res);
     });
 
     // 식중독 지수 조회

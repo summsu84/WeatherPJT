@@ -196,6 +196,99 @@ WeatherifeActionHandler.prototype.processAction = function(action, param, req, r
 
         });
     }
+    else if(action === 'All')
+    {
+        //콜백 처리 (프로마이즈 미사용 버전)
+        const retVal = {
+            items:[]
+        };
+        // 식중독 정보 조회
+        weatherlifeServiceLogic.getFsnLife(param, (result, code) => {
+            //성공시
+            retVal.items.push(result);
+            weatherlifeServiceLogic.getSensoryTemLife(param, (result, code) => {
+                //열 지수
+                retVal.items.push(result);
+                weatherlifeServiceLogic.getHeatLife(param, (result, code) => {
+                    //불쾌지수
+                    retVal.items.push(result);
+                    weatherlifeServiceLogic.getDsplsLife(param, (result, code) => {
+                        //동파지수
+                        retVal.items.push(result);
+                        weatherlifeServiceLogic.getAirPollutionLife(param, (result, code) => {
+                            //자외선 지수
+                            retVal.items.push(result);
+                            weatherlifeServiceLogic.getAirPollutionLife(param, (result, code) => {
+                                //성공시
+                                retVal.items.push(result);
+                                self.successResponse(selfRes, (code == null) ? Const.responsecodeSucceed : code, retVal);
+                            },(err,code, msg)=>{
+                                // 실패 시
+                                if(err){
+                                    self.errorResponse(
+                                        response,
+                                        Const.httpCodeSeverError
+                                    );
+                                }else{
+                                    self.successResponse(selfRes,code, msg, {});
+                                }
+                            });
+                        },(err,code, msg)=>{
+                            // 실패 시
+                            if(err){
+                                self.errorResponse(
+                                    response,
+                                    Const.httpCodeSeverError
+                                );
+                            }else{
+                                self.successResponse(selfRes,code, msg, {});
+                            }
+                        });
+                    },(err,code, msg)=>{
+                        // 실패 시
+                        if(err){
+                            self.errorResponse(
+                                response,
+                                Const.httpCodeSeverError
+                            );
+                        }else{
+                            self.successResponse(selfRes,code, msg, {});
+                        }
+                    });
+                },(err,code, msg)=>{
+                    // 실패 시
+                    if(err){
+                        self.errorResponse(
+                            response,
+                            Const.httpCodeSeverError
+                        );
+                    }else{
+                        self.successResponse(selfRes,code, msg, {});
+                    }
+                });
+            },(err,code, msg)=>{
+                // 실패 시
+                if(err){
+                    self.errorResponse(
+                        response,
+                        Const.httpCodeSeverError
+                    );
+                }else{
+                    self.successResponse(selfRes,code, msg, {});
+                }
+            });
+        },(err,code, msg)=>{
+            // 실패 시
+            if(err){
+                self.errorResponse(
+                    response,
+                    Const.httpCodeSeverError
+                );
+            }else{
+                self.successResponse(selfRes,code, msg, {});
+            }
+        });
+    }
     else if(action === 'GetFsnLife')
     {
         //token verify

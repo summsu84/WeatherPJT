@@ -202,6 +202,16 @@ let parsingResultOfWeatherLife = (type, body, onSuccess, onError) =>
             "items" : null,
             "itemType" : type
         };
+    const newGenValBase = {
+        items:[]
+    };
+    const newGenValItem = {
+        item : {
+            type: null,
+            header: null,
+            result: null
+        }
+    }
 
     // header 정보 파싱
     if(datas.hasOwnProperty("response"))
@@ -213,20 +223,114 @@ let parsingResultOfWeatherLife = (type, body, onSuccess, onError) =>
         let retVal;
         if (successYN === "N") {
             retVal = datas.Response.header;
-            newGenVal.header = retVal;
-            onSuccess(newGenVal, Const.responsecodeError);
+            newGenValItem.item.header = datas.Response.header;
+            newGenValItem.item.type = type;
+            newGenValItem.item.result = [];
+            //newGenVal.header = retVal;
+            onSuccess(newGenValItem, Const.responsecodeError);
         } else {
             retVal = datas.Response.body.indexModel;
-            newGenVal.header = datas.Response.header;
+            newGenValItem.item.header = datas.Response.header;
+            newGenValItem.item.type = type;
+            const tmpArray = [];
+            for(const key in retVal)
+            {
+                let value = retVal[key];
+                const tmpObject = {
+                    title: key,
+                    value: value,
+                    description: '',
+                    useYn: (key === "code" || key === "areaNo" || key === "date") ? 'N' : 'Y'
+                }
+
+                if(tmpObject.useYn == 'Y')
+                {
+                    tmpObject.description = getDescriptionInfo(type, value);;
+                }
+                tmpArray.push(tmpObject);
+            }
+            newGenValItem.item.result = tmpArray;
             const typeObject = {};
             typeObject[type] = retVal;
             newGenVal.items = typeObject;
-            onSuccess(newGenVal);
+            onSuccess(newGenValItem);
         }
     }
 }
 
+let getDescriptionInfo =(type, value) =>
+{
+    if(type === Const.FSN_ITEM)
+    {
+        return getFsnDescriptionInfo(value);
+    }
+}
 
+/**
+ *  식중독 지수 설명 정보
+ */
+let getFsnDescriptionInfo = (value) =>
+{
+    let retVal = '';
+    if(value >= 86)
+    {
+        retVal = Const.FSN_VALUE_VERY_HIGH;
+    }else if(value >= 71 && value < 86)
+    {
+        retVal = Const.FSN_VALUE_HIGH;
+    }else if(value >= 55 && value < 71)
+    {
+        retVal = Const.FSN_VALUE_NORMAL;
+    }else
+    {
+        retVal = Const.FSN_VALUE_GOOD;
+    }
+
+    return retVal;
+}
+
+/**
+ *  식중독 지수 설명 정보
+ */
+let getSensorytemDescriptionInfo = (value) =>
+{
+    let retVal = '';
+    if(value >= 86)
+    {
+        retVal = Const.FSN_VALUE_VERY_HIGH;
+    }else if(value >= 71 && value < 86)
+    {
+        retVal = Const.FSN_VALUE_HIGH;
+    }else if(value >= 55 && value < 71)
+    {
+        retVal = Const.FSN_VALUE_NORMAL;
+    }else
+    {
+        retVal = Const.FSN_VALUE_GOOD;
+    }
+
+    return retVal;
+}
+
+let getHeatLifeDescriptionInfo = (value) =>
+{
+    let retVal = '';
+    if(value >= 86)
+    {
+        retVal = Const.FSN_VALUE_VERY_HIGH;
+    }else if(value >= 71 && value < 86)
+    {
+        retVal = Const.FSN_VALUE_HIGH;
+    }else if(value >= 55 && value < 71)
+    {
+        retVal = Const.FSN_VALUE_NORMAL;
+    }else
+    {
+        retVal = Const.FSN_VALUE_GOOD;
+    }
+
+    return retVal;
+}
 
 module["exports"] = WeatherLifeServiceLogic;
 
