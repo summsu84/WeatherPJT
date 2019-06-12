@@ -245,9 +245,10 @@ let parsingResultOfWeatherLife = (type, body, onSuccess, onError) =>
 
                 if(tmpObject.useYn == 'Y')
                 {
-                    tmpObject.description = getDescriptionInfo(type, value);;
+                    tmpObject.description = getDescriptionInfo(type, value);
+                    tmpArray.push(tmpObject);
                 }
-                tmpArray.push(tmpObject);
+
             }
             newGenValItem.item.result = tmpArray;
             const typeObject = {};
