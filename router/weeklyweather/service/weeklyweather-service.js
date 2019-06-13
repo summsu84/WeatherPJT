@@ -90,7 +90,6 @@ const WeeklyWeatherServiceLogic = {
             console.error(body);
         } else {
             //성공인 경우..
-
             parsingResultOfMiddleForecastInfo(Const.MID_FORECAST_ITEM, body, onSuccess, onError);
 
         }
