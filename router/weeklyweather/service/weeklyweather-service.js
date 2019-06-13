@@ -73,7 +73,8 @@ const WeeklyWeatherServiceLogic = {
                 console.error(body);
             } else {
                 //성공인 경우..
-                onSuccess(JSON.parse(body));
+                //onSuccess(JSON.parse(body));
+                parsingResultOfMiddleForecastInfo(Const.MID_LAND_ITEM, body, onSuccess, onError);
             }
         });
     },
