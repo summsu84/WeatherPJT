@@ -95,6 +95,72 @@ WeeklyWeatherActionHandler.prototype.processAction = function(action, param, req
 
         });
     }
+    /**********************************************************
+     *  Author : JJW
+     *  Desc :  중기육상 조회 전체 서비스
+     *  Date : 20190508
+     ***********************************************************/
+    else if(action === 'MiddleForecastAll')
+    {
+        //콜백 처리 (프로마이즈 미사용 버전)
+        const retVal = {
+            items:[]
+        };
+        // 중기 전망
+        WeeklyWeatherServiceLogic.getMiddleForecastWeather(param, (result) => {
+            //성공시
+            retVal.items.push(result);
+            WeeklyWeatherServiceLogic.getMiddleTemperature(param, (result) => {
+                //성공시
+                retVal.items.push(result);
+                WeeklyWeatherServiceLogic.getMiddleLandWeather(param, (result) => {
+                    //성공시
+                    retVal.items.push(result);
+                    self.successResponse(selfRes,Const.responsecodeSucceed, retVal);
+                },(err,code, msg)=>{
+                    // 실패 시
+                    if(err){
+
+                        self.errorResponse(
+                            response,
+                            Const.httpCodeSeverError
+                        );
+
+                    }else{
+                        self.successResponse(selfRes,code, msg, {});
+                    }
+
+                });
+            },(err,code, msg)=>{
+                // 실패 시
+                if(err){
+
+                    self.errorResponse(
+                        response,
+                        Const.httpCodeSeverError
+                    );
+
+                }else{
+                    self.successResponse(selfRes,code, msg, {});
+                }
+
+            });
+        },(err,code, msg)=>{
+            // 실패 시
+            if(err){
+
+                self.errorResponse(
+                    response,
+                    Const.httpCodeSeverError
+                );
+
+            }else{
+                self.successResponse(selfRes,code, msg, {});
+            }
+
+        });
+    }
+
 
 };
 

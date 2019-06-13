@@ -14,23 +14,39 @@ module.exports = function(app)
     var express = require('express');
     var router = express.Router();
 
-    // default options
-    router.get('/forecast/all/:date/:time/:nx/:ny', function(req, res){
+    //시간별
+    router.get('/time/all/:date/:time/:nx/:ny', function(req, res){
         // 날짜, 시간, 선택한 위치의 위경도 좌표에 따라 주간 날씨 정보를 제공한다.
         processGetRequest('ForecastAll', req, res);
     });
 
-    router.get('/forecast/space/:date/:time/:nx/:ny', function(req, res){
+    router.get('/time/space/:date/:time/:nx/:ny', function(req, res){
         // 날짜, 시간, 선택한 위치의 위경도 좌표에 따라 주간 날씨 정보를 제공한다.
         processGetRequest('ForecastSpace', req, res);
     });
 
-    router.get('/forecast/middletemperature/:date/:regid', function(req, res){
+
+
+    // 중기 정보 모두
+    router.get('/middleforecast/all/:time/:landRegId/:tempRegId/:stnId', function(req, res){
+        // 날짜, 선택한 위치에 따라 중기 날씨 정보를 모두 제공한다.
+        processGetRequest('MiddleForecastAll', req, res);
+    });
+
+    // 중기 전망
+    router.get('/forecast/middleforecast/:time/:stnId', function(req, res){
+        // 날짜, 선택한 위치에 따라 중기 날씨 정보를 제공한다.
+        processGetRequest('MiddleForecast', req, res);
+    });
+
+    // 중기 기온 전망
+    router.get('/forecast/middletemperature/:time/:tempRegId', function(req, res){
         // 날짜, 선택한 위치에 따라 중기 날씨 정보를 제공한다.
         processGetRequest('MiddleTemperature', req, res);
     });
 
-    router.get('/forecast/middlelandweather/:date/:regid', function(req, res){
+    // 중기 날씨 전망
+    router.get('/forecast/middlelandweather/:time/:landRegId', function(req, res){
         // 날짜, 선택한 위치에 따라 중기 육지 날씨 정보를 제공한다.
         processGetRequest('MiddleLandWeather', req, res);
     });

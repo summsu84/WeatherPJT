@@ -22,9 +22,16 @@
     //WeeklyWeather
     Const.WEEKLYWEATHER_BASE_URL = 'http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/';
     Const.FORECAST_SPACE_URL = 'ForecastSpaceData';                                                                         //동네예보
+    Const.FORECAST_SPACE_ITEM = 'forecastSpace';
+
+    //http://newsky2.kma.go.kr/service/MiddleFrcstInfoService/getMiddleForecast?ServiceKey=Xi4VvLiWg3OmKvVVmaMucjfxbBB4AlGLaMK48fH2Icm%2BfJXiez2UaCkO%2Bb6y%2BK9pBlet%2BDzUWqMkjXYkPL2qaQ%3D%3D&stnId=133&tmFc=201404080600&pageNo=1&numOfRows=1
     Const.MID_BASE_URL = 'http://newsky2.kma.go.kr/service/MiddleFrcstInfoService/';                                         //중기 예보 베이스 URL
     Const.MID_TEMP_URL = 'getMiddleTemperature';
-    Const.MID_LAND_URL = 'MiddleLandWeather';
+    Const.MID_TEMP_ITEM = 'middleTemperature';
+    Const.MID_LAND_URL = 'getMiddleLandWeather';
+    Const.MID_LAND_ITEM = 'middleForecast';
+    Const.MID_FORECAST_URL = 'getMiddleForecast';
+    Const.MID_FORECAST_ITEM = 'middleForecast';
 
 
     //WeatherLife
