@@ -48,9 +48,10 @@ let parsingResultOfMiddleForecastInfo = (type, body, onSuccess, onError) =>
                     value: value,
                     description: '',
                     range: '',
-                    useYn: (key === "code" || key === "areaNo" || key === "date") ? 'N' : 'Y'
+                    useYn: (key === "code" || key === "areaNo" || key === "date" || key === "regId") ? 'N' : 'Y'
                 }
-                tmpArray.push(tmpObject);
+                if(tmpObject.useYn === "Y")
+                    tmpArray.push(tmpObject);
                 /*                if(tmpObject.useYn == 'Y')
                                 {
                                     const tmpResult = getDescriptionInfo(type, value);
