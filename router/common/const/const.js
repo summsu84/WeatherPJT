@@ -20,7 +20,7 @@
     Const.WEATHERLIFE_RANGE_LOW = "관심";
 
     //WeeklyWeather
-    Const.WEEKLYWEATHER_BASE_URL = 'http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/';
+    Const.TIMEWEATHER_BASE_URL = 'http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/';
     Const.FORECAST_SPACE_URL = 'ForecastSpaceData';                                                                         //동네예보
     Const.FORECAST_SPACE_ITEM = 'forecastSpace';
 

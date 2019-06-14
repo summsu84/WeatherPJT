@@ -14,19 +14,6 @@ module.exports = function(app)
     var express = require('express');
     var router = express.Router();
 
-    //시간별
-    router.get('/time/all/:date/:time/:nx/:ny', function(req, res){
-        // 날짜, 시간, 선택한 위치의 위경도 좌표에 따라 주간 날씨 정보를 제공한다.
-        processGetRequest('ForecastAll', req, res);
-    });
-
-    router.get('/time/space/:date/:time/:nx/:ny', function(req, res){
-        // 날짜, 시간, 선택한 위치의 위경도 좌표에 따라 주간 날씨 정보를 제공한다.
-        processGetRequest('ForecastSpace', req, res);
-    });
-
-
-
     // 중기 정보 모두
     router.get('/middleforecast/all/:time/:landRegId/:tempRegId/:stnId', function(req, res){
         // 날짜, 선택한 위치에 따라 중기 날씨 정보를 모두 제공한다.
