@@ -1,4 +1,4 @@
-
+const Const = require('../const/const');
 
 let parsingResultOfMiddleForecastInfo = (type, body, onSuccess, onError) =>
 {
