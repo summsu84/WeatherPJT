@@ -279,10 +279,13 @@ let getDescriptionInfo =(type, value) =>
     }else if(type === Const.WINTER_ITEM)
     {
         return getWinterLifeDescriptionInfo(value);
+    }else if(type === Const.ULTRV_ITEM)
+    {
+        return getUltrvLifeDescriptionInfo(value);
     }
-
     else {
-        return getFsnDescriptionInfo(value);
+        //대기오염확산지수
+        return getAirpollutionLifeDescriptionInfo(value);
     }
 }
 
@@ -440,6 +443,69 @@ let getWinterLifeDescriptionInfo = (value) =>
     {
         retVal.description = Const.WINTER_VALUE_LOW;
         retVal.range = Const.WEATHERLIFE_RANGE_LOW;
+    }
+    return retVal;
+}
+
+/**
+ *  자외선 지수 설명
+ * @param value
+ * @returns {{description: string, range: string}}
+ */
+let getUltrvLifeDescriptionInfo = (value) =>
+{
+    let retVal = {
+        description: '',
+        range: ''
+    };
+    if(value > 11)
+    {
+        retVal.description = Const.ULTRY_VALUE_DANGER;
+        retVal.range = Const.WEATHERLIFE_RANGE_DANGER;
+
+    }else if(value >= 8 && value <= 10)
+    {
+        retVal.description = Const.ULTRY_VALUE_VERY_HIGH;
+        retVal.range = Const.WEATHERLIFE_RANGE_VERY_HIGH;
+    }else if(value >= 6 && value <= 7)
+    {
+        retVal.description = Const.ULTRY_VALUE_HIGH;
+        retVal.range = Const.WEATHERLIFE_RANGE_HIGH;
+    }else if(value >= 3 && value <= 5)
+    {
+        retVal.description = Const.ULTRY_VALUE_NORMAL;
+        retVal.range = Const.WEATHERLIFE_RANGE_NORMAL;
+    }else
+    {
+        retVal.description = Const.ULTRY_VALUE_LOW;
+        retVal.range = Const.WEATHERLIFE_RANGE_LOW;
+    }
+    return retVal;
+}
+
+let getAirpollutionLifeDescriptionInfo = (value) =>
+{
+    let retVal = {
+        description: '',
+        range: ''
+    };
+    if(value === 100)
+    {
+        retVal.description = Const.AIRPOLLUTION_VALUE_LOW;
+        retVal.range = Const.WEATHERLIFE_RANGE_LOW;
+
+    }else if(value === 75)
+    {
+        retVal.description = Const.AIRPOLLUTION_VALUE_NORMAL;
+        retVal.range = Const.WEATHERLIFE_RANGE_NORMAL;
+    }else if(value === 50)
+    {
+        retVal.description = Const.AIRPOLLUTION_VALUE_HIGH;
+        retVal.range = Const.WEATHERLIFE_RANGE_HIGH;
+    }else if(value === 25)
+    {
+        retVal.description = Const.ULTRY_VALUE_VERY_HIGH;
+        retVal.range = Const.WEATHERLIFE_RANGE_VERY_HIGH;
     }
     return retVal;
 }

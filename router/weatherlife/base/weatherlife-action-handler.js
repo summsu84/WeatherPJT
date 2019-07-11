@@ -215,13 +215,28 @@ WeatherifeActionHandler.prototype.processAction = function(action, param, req, r
                     weatherlifeServiceLogic.getDsplsLife(param, (result, code) => {
                         //동파지수
                         retVal.items.push(result);
-                        weatherlifeServiceLogic.getAirPollutionLife(param, (result, code) => {
+                        weatherlifeServiceLogic.getWinterLife(param, (result, code) => {
                             //자외선 지수
                             retVal.items.push(result);
-                            weatherlifeServiceLogic.getAirPollutionLife(param, (result, code) => {
+                            weatherlifeServiceLogic.getUltrvLife(param, (result, code) => {
                                 //성공시
                                 retVal.items.push(result);
-                                self.successResponse(selfRes, (code == null) ? Const.responsecodeSucceed : code, retVal);
+                                // 대기 오염확산 지수
+                                weatherlifeServiceLogic.getAirPollutionLife(param, (result, code) => {
+                                    //성공시
+                                    retVal.items.push(result);
+                                    self.successResponse(selfRes, (code == null) ? Const.responsecodeSucceed : code, retVal);
+                                },(err,code, msg)=>{
+                                    // 실패 시
+                                    if(err){
+                                        self.errorResponse(
+                                            response,
+                                            Const.httpCodeSeverError
+                                        );
+                                    }else{
+                                        self.successResponse(selfRes,code, msg, {});
+                                    }
+                                });
                             },(err,code, msg)=>{
                                 // 실패 시
                                 if(err){

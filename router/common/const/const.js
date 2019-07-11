@@ -15,7 +15,9 @@
     //Alert
     Const.WEATHERLIFE_RANGE_DANGER = "위험";
     Const.WEATHERLIFE_RANGE_VERY_HIGH = "매우높음";
+    Const.WEATHERLIFE_RANGE_ALERT = "경고";
     Const.WEATHERLIFE_RANGE_HIGH = "높음";
+    Const.WEATHERLIFE_RANGE_CAUTION = "주의";
     Const.WEATHERLIFE_RANGE_NORMAL = "보통";
     Const.WEATHERLIFE_RANGE_LOW = "관심";
 
@@ -90,10 +92,10 @@
         '▶ 모자, 벙어리 장갑, 목도리, 방수 신발 등을 착용함\n' +
         '▶ 야외 작업 시 땀 흡수가 잘 되는 내복을 입도록 함\n' +
         '▶ 옷이나 신발 등이 젖지 않도록 하고, 젖은 즉시 갈아입음';
-    Const.SENSORYTEM_VALUE_WARN = '▶ 추위를 느끼는 정도가 증가함\n' +
+    Const.SENSORYTEM_VALUE_CAUTION = '▶ 추위를 느끼는 정도가 증가함\n' +
         '▶ 옷을 따뜻하게 입고 모자, 장갑, 목도리 등을 착용함\n' +
         '▶ 옷이나 신발 등이 젖지 않도록 함';
-    Const.SENSORYTEM_VALUE_CAUTION = '▶ 추위가 느껴지기 시작함\n' +
+    Const.SENSORYTEM_VALUE_LOW = '▶ 추위가 느껴지기 시작함\n' +
         '▶ 옷을 따뜻하게 입음\n' +
         '▶ 옷이나 신발 등이 젖지 않도록 함'
 
@@ -129,13 +131,46 @@
     Const.DSPIS_VALUE_NORMAL = '▶ 불쾌감을 나타내기 시작함\n' +
         '▶ 어린이, 노약자 등 더위에 취약한 사람들은 야외활동을 시 가벼운 옷을 입기\n' +
         '▶ 수분을 충분히 섭취함';
-    Const.DSPIS_LOW = '▶ 전원 쾌적함을 느낌';
+    Const.DSPIS_VALUE_LOW = '▶ 전원 쾌적함을 느낌';
 
     //동파 지수
-
+    Const.WINTER_VALUE_VERY_HIGH = '▶ 전원 불쾌감을 느낌\n' +
+        '▶ 어린이, 노약자 등 더위에 취약한 사람들은 야외활동을 자제함\n' +
+        '▶ 에어컨, 제습기, 실내 환기 등을 통해 실내 온습도를 조절하거나 무더위쉼터 \n' +
+        '   등으로 이동하여 휴식\n' +
+        '▶ 수분을 미리 충분히 섭취';
+    Const.WINTER_VALUE_HIGH = '▶ 50% 정도 불쾌감을 느낌\n' +
+        '▶ 어린이, 노약자 등 더위에 취약한 사람들은 12시~5시 사이에는 야외활동을 \n' +
+        '   자제하거나 가벼운 옷을 입기\n' +
+        '▶ 에어컨, 제습기, 실내 환기 등을 통해 실내 온습도를 조절함\n' +
+        '▶ 지속적으로 수분을 섭취함';
+    Const.WINTER_VALUE_NORMAL = '▶ 불쾌감을 나타내기 시작함\n' +
+        '▶ 어린이, 노약자 등 더위에 취약한 사람들은 야외활동을 시 가벼운 옷을 입기\n' +
+        '▶ 수분을 충분히 섭취함';
+    Const.WINTER_VALUE_LOW = '▶ 전원 쾌적함을 느낌';
     //자외선 지수
-
+    Const.ULTRY_VALUE_DANGER = '▶ 햇볕에 노출 시 수십 분 이내에도 피부 화상을 입을 수 있어 가장 위험함\n' +
+        '▶ 가능한 실내에 머물러야 함\n' +
+        '▶ 외출 시 긴 소매 옷, 모자, 선글라스 이용\n' +
+        '▶ 자외선 차단제를 정기적으로 발라야 함'
+    Const.ULTRY_VALUE_VERY_HIGH = '▶ 햇볕에 노출 시 수십 분 이내에도 피부 화상을 입을 수 있어 매우 위험함 \n' +
+        '▶ 오전 10시부터 오후 3시까지 외출을 피하고 실내나 그늘에 머물러야 함 \n' +
+        '▶ 외출 시 긴 소매 옷, 모자, 선글라스 이용\n' +
+        '▶ 자외선 차단제를 정기적으로 발라야 함';
+    Const.ULTRY_VALUE_HIGH = '▶ 햇볕에 노출 시 1～2시간 내에도 피부 화상을 입을 수 있어 위험함\n' +
+        '▶ 한낮에는 그늘에 머물러야 함\n' +
+        '▶ 외출 시 긴 소매 옷, 모자, 선글라스 이용\n' +
+        '▶ 자외선 차단제를 정기적으로 발라야 함';
+    Const.ULTRY_VALUE_NORMAL = '▶ 2～3시간 내에도 햇볕에 노출 시에 피부 화상을 입을 수 있음 \n' +
+        '▶ 모자, 선글라스 이용 \n' +
+        '▶ 자외선 차단제를 발라야 함';
+    Const.ULTRY_VALUE_LOW = '\t▶ 햇볕 노출에 대한 보호조치가 필요하지 않음 \n' +
+        '▶ 그러나 햇볕에 민감한 피부를 가진 분은 자외선 차단제를 발라야 함';
     //대기오염확산지수
+    Const.AIRPOLLUTION_VALUE_LOW = '▶ 기상조건에 의해 대기변화 가능성이 낮음'
+    Const.AIRPOLLUTION_VALUE_NORMAL = '▶ 기상조건에 의해 대기변화 가능성이 보통';
+    Const.AIRPOLLUTION_VALUE_HIGH = '▶ 기상조건에 의해 대기변화 가능성이 높음';
+    Const.AIRPOLLUTION_VALUE_VERY_NORMAL = '▶ 기상조건에 의해 대기변화 가능성이 매우 높음';
 
 
     // Exports ----------------------------------------------
