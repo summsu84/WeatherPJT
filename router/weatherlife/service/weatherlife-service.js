@@ -267,7 +267,21 @@ let getDescriptionInfo =(type, value) =>
     if(type === Const.FSN_ITEM)
     {
         return getFsnDescriptionInfo(value);
-    }else {
+    }else if(type === Const.SENSORYTEM_ITEM)
+    {
+        return getSensorytemDescriptionInfo(value);
+    }else if(type === Const.HEAT_ITEM)
+    {
+        return getHeatLifeDescriptionInfo(value);
+    }else if(type === Const.DSPIS_ITEM)
+    {
+        return getDsplsLifeDescriptionInfo(value);
+    }else if(type === Const.WINTER_ITEM)
+    {
+        return getWinterLifeDescriptionInfo(value);
+    }
+
+    else {
         return getFsnDescriptionInfo(value);
     }
 }
@@ -312,28 +326,32 @@ let getSensorytemDescriptionInfo = (value) =>
         description: '',
         range: ''
     };
-    if(value >= 86)
+    if(value < -45)
     {
-        retVal.description = Const.FSN_VALUE_VERY_HIGH;
-        retVal.range = Const.WEATHERLIFE_RANGE_VERY_HIGH;
+        retVal.description = Const.SENSORYTEM_VALUE_DANGER;     // 위험
+        retVal.range = Const.WEATHERLIFE_RANGE_DANGER;
 
-    }else if(value >= 71 && value < 86)
+    }else if(value > -25 && value <= -45)
     {
-        retVal.description = Const.FSN_VALUE_HIGH;
-        retVal.range = Const.WEATHERLIFE_RANGE_HIGH;
-    }else if(value >= 55 && value < 71)
+        retVal.description = Const.SENSORYTEM_VALUE_ALERT;
+        retVal.range = Const.WEATHERLIFE_RANGE_ALERT;
+    }else if(value > -10 && value <= -25)
     {
-        retVal.description = Const.FSN_VALUE_NORMAL;
-        retVal.range = Const.WEATHERLIFE_RANGE_NORMAL;
+        retVal.description = Const.SENSORYTEM_VALUE_CAUTION;
+        retVal.range = Const.WEATHERLIFE_RANGE_CAUTION;
     }else
     {
-        retVal.description = Const.FSN_VALUE_GOOD;
+        retVal.description = Const.SENSORYTEM_VALUE_LOW;
         retVal.range = Const.WEATHERLIFE_RANGE_LOW;
     }
 
     return retVal;
 }
 
+
+/**
+ *  열 지수 설명 정보
+ */
 let getHeatLifeDescriptionInfo = (value) =>
 {
     let retVal = {
@@ -342,31 +360,89 @@ let getHeatLifeDescriptionInfo = (value) =>
     };
     if(value >= 66)
     {
-        retVal.description = Const.FSN_VALUE_VERY_HIGH;
+        retVal.description = Const.HEAT_VALUE_DANGER;
         retVal.range = Const.WEATHERLIFE_RANGE_DANGER;
 
     }else if(value >= 54 && value < 65)
     {
-        retVal.description = Const.FSN_VALUE_HIGH;
+        retVal.description = Const.HEAT_VALUE_VERY_HIGH;
         retVal.range = Const.WEATHERLIFE_RANGE_VERY_HIGH;
     }else if(value >= 41 && value < 54)
     {
-        retVal.description = Const.FSN_VALUE_NORMAL;
+        retVal.description = Const.HEAT_VALUE_HIGH;
         retVal.range = Const.WEATHERLIFE_RANGE_VERY_HIGH;
     }else if(value >= 32 && value < 41)
     {
-        retVal.description = Const.FSN_VALUE_NORMAL;
+        retVal.description = Const.HEAT_VALUE_NORMAL;
         retVal.range = Const.WEATHERLIFE_RANGE_NORMAL;
     }
     else
     {
-        retVal.description = Const.FSN_VALUE_GOOD;
+        retVal.description = Const.HEAT_VALUE_LOW;
         retVal.range = Const.WEATHERLIFE_RANGE_LOW;
     }
-
     return retVal;
 }
 
+/**
+ *  불쾌 지수 설명 정보
+ */
+let getDsplsLifeDescriptionInfo = (value) =>
+{
+    let retVal = {
+        description: '',
+        range: ''
+    };
+    if(value >= 80)
+    {
+        retVal.description = Const.DSPIS_VALUE_VERY_HIGH;
+        retVal.range = Const.WEATHERLIFE_RANGE_VERY_HIGH;
+
+    }else if(value >= 75 && value < 80)
+    {
+        retVal.description = Const.DSPIS_VALUE_HIGH;
+        retVal.range = Const.WEATHERLIFE_RANGE_HIGH;
+    }else if(value >= 68 && value < 75)
+    {
+        retVal.description = Const.DSPIS_VALUE_NORMAL;
+        retVal.range = Const.WEATHERLIFE_RANGE_NORMAL;
+    }else
+    {
+        retVal.description = Const.DSPIS_VALUE_LOW;
+        retVal.range = Const.WEATHERLIFE_RANGE_LOW;
+    }
+    return retVal;
+}
+
+/**
+ *  동파가능 지수 설명 정보
+ */
+let getWinterLifeDescriptionInfo = (value) =>
+{
+    let retVal = {
+        description: '',
+        range: ''
+    };
+    if(value === 100)
+    {
+        retVal.description = Const.WINTER_VALUE_VERY_HIGH;
+        retVal.range = Const.WEATHERLIFE_RANGE_VERY_HIGH
+
+    }else if(value === 75)
+    {
+        retVal.description = Const.WINTER_VALUE_VERY_HIGH;
+        retVal.range = Const.WEATHERLIFE_RANGE_VERY_HIGH;
+    }else if(value === 50)
+    {
+        retVal.description = Const.WINTER_VALUE_NORMAL;
+        retVal.range = Const.WEATHERLIFE_RANGE_NORMAL;
+    }else if(value === 25)
+    {
+        retVal.description = Const.WINTER_VALUE_LOW;
+        retVal.range = Const.WEATHERLIFE_RANGE_LOW;
+    }
+    return retVal;
+}
 module["exports"] = WeatherLifeServiceLogic;
 
 
