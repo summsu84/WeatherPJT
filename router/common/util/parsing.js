@@ -1,4 +1,5 @@
 const Const = require('../const/const');
+const DateUtil = require('./dateUtil');
 
 let parsingResultOfMiddleForecastInfo = (type, body, onSuccess, onError) =>
 {
@@ -118,6 +119,7 @@ let parsingResultOfMiddleForecastISpaceNew = (type, body, onSuccess, onError) =>
     }
 }
 
+// 시간별 조회 파싱
 let generateForecastSpaceResultByTime = (items) =>
 {
     let prevFcstDate = 0;
@@ -141,22 +143,40 @@ let generateForecastSpaceResultByTime = (items) =>
         {
             curFcstTime = v.fcstTime;
         }
-        //날짜가 같은 경우
-        if(prevFcstTime === curFcstTime)
+
+        // 현재 시간과 fcstTime을 비교하여, 과거 정보는 스킵 한다.
+        //fcstTime이 숫자인지 스트링인지 판단한다.
+        let tmpFcstTimeHour;
+        if(typeof v.fcstTime === "number")
         {
-            //시간이 같은 경우
-            tmpItems[idx].time.push(v);
-        }
-        //날짜가 다른 경우
-        else
+            v.fcstTime = v.fcstTime.toString();
+            tmpFcstTimeHour = Number((v.fcstTime.toString()).substring(0, 2));
+        }else
         {
-            tmpItems.push({
-                time:[]
-            });
-            idx++;
-            tmpItems[idx].time.push(v);
+            tmpFcstTimeHour = Number(v.fcstTime.substring(0, 2));
         }
-        prevFcstTime = curFcstTime;
+        // 현재 시간 가져오기
+        let currentTimeHour = DateUtil.getCurrentHour();
+
+        if(tmpFcstTimeHour >= currentTimeHour)
+        {
+            //날짜가 같은 경우
+            if(prevFcstTime === curFcstTime)
+            {
+                //시간이 같은 경우
+                tmpItems[idx].time.push(v);
+            }
+            //날짜가 다른 경우
+            else
+            {
+                tmpItems.push({
+                    time:[]
+                });
+                idx++;
+                tmpItems[idx].time.push(v);
+            }
+            prevFcstTime = curFcstTime;
+        }
     });
 
     return tmpItems;
@@ -190,7 +210,7 @@ let parsingResultOfForecastSpace = (body) =>
             }
         }
     };
-    const checkCategories = ['SKY', 'T3H', 'TMN', 'TMX'];
+    const checkCategories = ['PTY', 'SKY', 'T3H', 'TMN', 'TMX'];
     let prevFcstDate = 0;
     let curFcstDate = 0;
     let prevFcstTime = "";

@@ -4,6 +4,7 @@
 'use strict';
 const ParsingModule = require('./parsing');
 const UrlModule = require('./url');
+const DateUtilModule = require('./dateUtil');
 
 module.exports = {
     'parsingResultOfMiddleForecastInfo': (type, body, onSuccess, onError) => {
@@ -24,4 +25,7 @@ module.exports = {
     'getMiddleForecastUrl': (params, baseUrl, serviceUrl, serviceKey) => {
         return UrlModule.getMiddleForecastUrl(params, baseUrl, serviceUrl, serviceKey);
     },
+    'getCurrentHour' : () => {
+        return DateUtilModule.getCurrentHour()
+    }
 };
