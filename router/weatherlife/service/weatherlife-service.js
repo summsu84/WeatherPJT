@@ -1,5 +1,6 @@
 /**
  * Created by JJW on 2019-04-08,
+ * 생활 기상 서비스
  */
 
 const Const = require('../../common/const/const');
