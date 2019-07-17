@@ -51,6 +51,11 @@ let parsingResultOfMiddleForecastInfo = (type, body, onSuccess, onError) =>
                     range: '',
                     useYn: (key === "code" || key === "areaNo" || key === "date" || key === "regId") ? 'N' : 'Y'
                 }
+                // ta로 시작하는 경우 체크 한다.
+                if(key.substring(0, 2) === "ta"){
+                    if(key.indexOf("High") > 0 || key.indexOf("Low") > 0|| key.slice(-3) =='Min')
+                        tmpObject.useYn = 'N';
+                }
                 if(tmpObject.useYn === "Y")
                     tmpArray.push(tmpObject);
                 /*                if(tmpObject.useYn == 'Y')
