@@ -31,7 +31,7 @@ const TimeWeatherServiceLogic = {
             if (error) {
                 console.error(error);
                 if (onError)
-                    onError(err, null);
+                    onError(error, null);
             } else if (response.statusCode !== 200) {
                 console.error(body);
             } else {

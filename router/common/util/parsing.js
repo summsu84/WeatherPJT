@@ -134,10 +134,10 @@ let generateForecastSpaceResultByTime = (items) =>
     let tmpItems = [
 
     ];
-    let idx = 0;
+    let idx = -1;
     items.forEach((v, i) => {
         // 현재 날씨 정보를 파싱한다.
-        if(i === 0)
+ /*       if(i === 0)
         {
             curFcstTime = v.fcstTime;
             prevFcstTime = v.fcstTime;
@@ -147,7 +147,7 @@ let generateForecastSpaceResultByTime = (items) =>
         }else
         {
             curFcstTime = v.fcstTime;
-        }
+        }*/
 
         // 현재 시간과 fcstTime을 비교하여, 과거 정보는 스킵 한다.
         //fcstTime이 숫자인지 스트링인지 판단한다.
@@ -160,12 +160,80 @@ let generateForecastSpaceResultByTime = (items) =>
         {
             tmpFcstTimeHour = Number(v.fcstTime.substring(0, 2));
         }
-        // 현재 시간 가져오기
-        let currentTimeHour = DateUtil.getCurrentHour();
 
-        if(tmpFcstTimeHour >= currentTimeHour)
+
+        // 날짜가 달라지는 경우 예외 체크
+        let baseDate = v.baseDate;
+        let fcstDate = v.fcstDate;
+        curFcstTime = v.fcstTime;
+        // 시간 체크 전 버전
+/*        if(prevFcstTime === curFcstTime)
         {
-            //날짜가 같은 경우
+            //시간이 같은 경우
+            tmpItems[idx].time.push(v);
+        }
+        //날짜가 다른 경우
+        else
+        {
+            tmpItems.push({
+                time:[]
+            });
+            idx++;
+            tmpItems[idx].time.push(v);
+        }
+        prevFcstTime = curFcstTime;*/
+
+        //예측 날짜와 관측 날짜가 같은 경우 시간을 이후를 체크 한다.
+        if(baseDate === fcstDate)
+        {
+            // 현재 시간 가져오기
+            let currentTimeHour = DateUtil.getCurrentHour() ;
+            //let currentTimeHour = 10;
+            if(tmpFcstTimeHour >= currentTimeHour)
+            {
+                //시간이 같은 경우
+                if(prevFcstTime === curFcstTime)
+                {
+                    //시간이 같은 경우
+                    tmpItems[idx].time.push(v);
+                }
+                //날짜가 다른 경우
+                else
+                {
+                    tmpItems.push({
+                        time:[v]
+                    });
+
+                    //tmpItems[idx].time.push(v);
+                    idx++;
+                }
+                prevFcstTime = curFcstTime;
+            }
+
+        }else
+        {
+            // 그 외에는 모든 시간을 저장한다.
+            //시간이 같은 경우
+            if(prevFcstTime === curFcstTime)
+            {
+                //시간이 같은 경우
+                tmpItems[idx].time.push(v);
+            }
+            //시간이 다른 경우
+            else
+            {
+                tmpItems.push({
+                    time:[v]
+                });
+
+                //tmpItems[idx].time.push(v);
+                idx++;
+            }
+            prevFcstTime = curFcstTime;
+        }
+        /*if(tmpFcstTimeHour >= currentTimeHour)
+        {
+            //시간이 같은 경우
             if(prevFcstTime === curFcstTime)
             {
                 //시간이 같은 경우
@@ -181,7 +249,7 @@ let generateForecastSpaceResultByTime = (items) =>
                 tmpItems[idx].time.push(v);
             }
             prevFcstTime = curFcstTime;
-        }
+        }*/
     });
 
     return tmpItems;
